@@ -14,6 +14,11 @@ module.exports = function(opts) {
   return function *jwt(next) {
     var token, msg, user, parts, scheme, credentials;
 
+    if(this.method === 'OPTIONS') {
+      this.status = 204;
+      return;
+    }
+
     if (this.header.authorization) {
       parts = this.header.authorization.split(' ');
       if (parts.length == 2) {
